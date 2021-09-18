@@ -12,7 +12,6 @@ class MongoLib {
         this.client = new MongoClient(MONGO_URI, { useNewUrlParser : true});
         this.dbName = db_name;
     }
-    // solo una instancia de la conexion , verificar si ya hay una abierta
     connect(){
         if(!MongoLib.connection) {
             MongoLib.connection = new Promise ((resolve, reject ) => {
