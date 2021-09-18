@@ -39,7 +39,8 @@ class MongoLib {
         })
     }
     create(collection , data){
-        return this.connect().then(db => { //la promesa nos devuelve una instancia  a la base de datos, esa instancia tiene los metodos de mongo
+        return this.connect()
+        .then(db => { //la promesa nos devuelve una instancia  a la base de datos, esa instancia tiene los metodos de mongo
             return db.collection(collection).insertOne(data)
         }).then(result => result.insertedId)
     }

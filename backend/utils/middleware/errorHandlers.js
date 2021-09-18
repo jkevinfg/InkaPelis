@@ -2,6 +2,7 @@ const boom = require('@hapi/boom');
 const { config } = require('../../config/index');
 
 function withErroStack(err, stack) {
+  console.log(config.dev)
   if (config.dev) {
     return { ...err, stack};
   }

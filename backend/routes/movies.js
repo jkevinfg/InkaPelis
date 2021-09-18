@@ -1,7 +1,15 @@
 const express = require('express');
 const MoviesService = require('../services/movies');
 
+const {
+    movieIdSchema,
+    createMovieSchema,
+    updateMovieSchema
+  } = require('../utils/schemas/movies');
+  
+  const validationHandler = require('../utils/middleware/validationHandler');
 
+  
 // las rutas solo reciben los parametros y se las envian a los servicios
 
 function moviesApi(app){
@@ -27,66 +35,92 @@ function moviesApi(app){
     });
 
      //Busqueda
-     router.get('/:movieId',async function(req,res,next) {
-        const {movieId} = req.params;
-        try{
-            const movies = await moviesService.getMovies({movieId})
+     router.get(
+        '/:movieId',
+        validationHandler({ movieId: movieIdSchema }, 'params'),
+        async function(req, res, next) {
+          const { movieId } = req.params;
+    
+          try {
+            const movies = await moviesService.getMovie({ movieId });
+    
             res.status(200).json({
-                data: movies,
-                message : 'movie retrieved'
-            })
-        }catch(err){
+              data: movies,
+              message: 'movie retrieved'
+            });
+          } catch (err) {
             next(err);
+          }
         }
-    });
+      );
 
      //crear
-     router.post('/',async function(req,res,next) {
-        const {body : movie } = req;
-        try{
-            const createMovieId = await moviesService.createMovie({movie});
-            res.status(201).json({
-                data: createMovieId,
-                message : 'movies created'
-            })
-        }catch(err){
-            next(err);
+     router.post('/', validationHandler(createMovieSchema), async function(
+        req,
+        res,
+        next
+      ) {
+        const { body: movie } = req;
+        try {
+          const createdMovieId = await moviesService.createMovie({ movie });
+    
+          res.status(201).json({
+            data: createdMovieId,
+            message: 'movie created'
+          });
+        } catch (err) {
+          next(err);
         }
-    });
+      });
+    
 
     //actualizar
-    router.put('/:movieId',async function(req,res,next) {
-        const {movieId} = req.params;
-        const {body : movie} = req;
+   
+  router.put(
+    '/:movieId',
+    validationHandler({ movieId: movieIdSchema }, 'params'),
+    validationHandler(updateMovieSchema),
+    async function(req, res, next) {
+      const { movieId } = req.params;
+      const { body: movie } = req;
 
-        try{
-            const updateMovieId = await moviesService.updateMovie({
-                movieId,
-                movie
-            })
-            res.status(200).json({
-                data: updateMovieId,
-                message : 'movie updated'
-            })
-        }catch(err){
-            next(err);
-        }
-    });
+      try {
+        const updatedMovieId = await moviesService.updateMovie({
+          movieId,
+          movie
+        });
+
+        res.status(200).json({
+          data: updatedMovieId,
+          message: 'movie updated'
+        });
+      } catch (err) {
+        next(err);
+      }
+    }
+  );
     //eliminar 
-    router.delete('/:movieId',async function(req,res,next) {
-        const {movieId} = req.params;
-
-        try{
-            const deletedMovieId = await moviesService.deleteMovie({movieId});
+    router.delete(
+        '/:movieId',
+        validationHandler({ movieId: movieIdSchema }, 'params'),
+        async function(req, res, next) {
+          const { movieId } = req.params;
+    
+          try {
+            const deletedMovieId = await moviesService.deleteMovie({ movieId });
+    
             res.status(200).json({
-                data: deletedMovieId,
-                message : 'movies deleted'
-            })
-        }catch(err){
+              data: deletedMovieId,
+              message: 'movie deleted'
+            });
+          } catch (err) {
             next(err);
+          }
         }
-    });
+      );
 }
 
 module.exports = moviesApi;
+
+
 
