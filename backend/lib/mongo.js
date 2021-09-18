@@ -3,9 +3,9 @@ const { config }  = require('../config');
 
 const user = encodeURIComponent(config.dbUser);
 const password = encodeURIComponent(config.dbPassword);
-const db_name = config.db.name;
+const db_name = config.dbName;
 
-const MONGO_URI = `mongodb+srv://${user}:${password}@${config.dbHost}:${config.dbPort}/${db_name}?retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb+srv://${user}:${password}@${config.dbHost}/${db_name}?retryWrites=true&w=majority`;
 
 class MongoLib {
     constructor() {
