@@ -6,10 +6,10 @@ const {
     createMovieSchema,
     updateMovieSchema
   } = require('../utils/schemas/movies');
-  
+
   const validationHandler = require('../utils/middleware/validationHandler');
 
-  
+
 // las rutas solo reciben los parametros y se las envian a los servicios
 
 function moviesApi(app){
@@ -40,10 +40,10 @@ function moviesApi(app){
         validationHandler({ movieId: movieIdSchema }, 'params'),
         async function(req, res, next) {
           const { movieId } = req.params;
-    
+
           try {
             const movies = await moviesService.getMovie({ movieId });
-    
+
             res.status(200).json({
               data: movies,
               message: 'movie retrieved'
@@ -63,7 +63,7 @@ function moviesApi(app){
         const { body: movie } = req;
         try {
           const createdMovieId = await moviesService.createMovie({ movie });
-    
+
           res.status(201).json({
             data: createdMovieId,
             message: 'movie created'
@@ -72,10 +72,10 @@ function moviesApi(app){
           next(err);
         }
       });
-    
+
 
     //actualizar
-   
+
   router.put(
     '/:movieId',
     validationHandler({ movieId: movieIdSchema }, 'params'),
@@ -99,16 +99,16 @@ function moviesApi(app){
       }
     }
   );
-    //eliminar 
+    //eliminar
     router.delete(
         '/:movieId',
         validationHandler({ movieId: movieIdSchema }, 'params'),
         async function(req, res, next) {
           const { movieId } = req.params;
-    
+
           try {
             const deletedMovieId = await moviesService.deleteMovie({ movieId });
-    
+
             res.status(200).json({
               data: deletedMovieId,
               message: 'movie deleted'

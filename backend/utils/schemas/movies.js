@@ -7,7 +7,7 @@ const movieCoverSchema = joi.string().uri();
 const movieDescriptionSchema = joi.string().max(300);
 const movieDurationShema = joi.number().min(1).max(300);
 const movieContentRatingShema = joi.string().max(5);
-const movieSourceSchema = joi.string().uri(); 
+const movieSourceSchema = joi.string().uri();
 const movieTagsSchema = joi.array().items(joi.string().max(50));
 
 const createMovieSchema = joi.object({
@@ -31,6 +31,16 @@ const updateMovieSchema = joi.object({
 	source: movieSourceSchema,
 	tags: movieTagsSchema,
 });
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
 	movieIdSchema,
