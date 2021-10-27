@@ -1,5 +1,18 @@
-$body-color: red;
+@import "./Vars.scss";
+@import "./Media.scss";
+
 
 body {
-  background-color: $body-color;
+  margin: 0;
+  font-family: $theme-font;
+  background: $main-color;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+* {
+  box-sizing: border-box;
 }
