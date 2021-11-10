@@ -3,7 +3,7 @@ import '../assets/styles/components/Footer.scss';
 
 const Footer = () => (
   <footer className='footer'>
-    <a href='/'>Software Developer - Jair Kevin</a>
+    <a href='https://twitter.com/jkevin_fg'>Kevin Flores - Software Developer</a>
   </footer>
 );
 
