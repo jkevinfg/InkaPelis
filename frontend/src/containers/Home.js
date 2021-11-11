@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
@@ -10,13 +10,13 @@ import '../assets/styles/App.scss';
 
 const API = 'http://localhost:3000/initialState';
 
-const App = () => {
+const Home = () => {
   const initialState = useInitialState(API);
 
   console.log(initialState);
   return initialState.length === 0 ? <h1>Loading</h1> : (
-    <div className='App'>
-      <Header />
+
+    <React.Fragment>
       <Search />
       {initialState.mylist.length > 0 && (
         <Categories title='Mi Lista'>
@@ -38,10 +38,10 @@ const App = () => {
         </Carousel>
       </Categories>
 
-      <Footer />
-    </div>
+    </React.Fragment>
+
   );
 
 };
 
-export default App;
+export default Home;
