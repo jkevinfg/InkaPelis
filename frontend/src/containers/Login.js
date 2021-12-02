@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginRequest } from '../actions';
-import Header from '../components/Header';
+
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
 
@@ -48,7 +48,7 @@ const Login = (props) => {
               autoComplete='current-password'
               onChange={handleInput}
             />
-            <button className='button'>Iniciar sesión</button>
+            <button className='button' type='submit'>Iniciar sesión</button>
             <div className='login__container--remember-me'>
               <label>
                 <input
