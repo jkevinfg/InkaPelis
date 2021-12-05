@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginRequest } from '../actions';
-
+import Header from '../components/Header';
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
 
@@ -28,6 +29,7 @@ const Login = (props) => {
 
   return (
     <>
+      <Header setColor='green' />
       <section className='login'>
         <section className='login__container'>
           <h2>Inicia sesión</h2>
@@ -48,7 +50,7 @@ const Login = (props) => {
               autoComplete='current-password'
               onChange={handleInput}
             />
-            <button className='button' type='submit'>Iniciar sesión</button>
+            <button type='submit' className='button'>Iniciar sesión</button>
             <div className='login__container--remember-me'>
               <label>
                 <input
@@ -63,12 +65,12 @@ const Login = (props) => {
           </form>
           <section className='login__container--social-media'>
             <div>
-              <img src={googleIcon} />
+              <img src={googleIcon} alt='icono google' />
               {' '}
               Inicia sesión con Google
             </div>
             <div>
-              <img src={twitterIcon} />
+              <img src={twitterIcon} alt='icono twitter' />
               {' '}
               Inicia sesión con Twitter
             </div>

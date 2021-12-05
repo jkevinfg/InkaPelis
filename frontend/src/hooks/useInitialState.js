@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 
 const useInitialState = (API) => {
-
-  const [movies, setMovies] = useState([]);
+  const [videos, setVideos] = useState({
+    mylist: [],
+    trends: [],
+    originals: [],
+  });
 
   useEffect(() => {
     fetch(API)
       .then(response => response.json())
-      .then(data => setMovies(data));
+      .then(data => setVideos(data))
+      .catch(() => console.log('Failed connection with API'));
   }, []);
-
-  return movies;
+  return videos;
 };
 
 export default useInitialState;
-

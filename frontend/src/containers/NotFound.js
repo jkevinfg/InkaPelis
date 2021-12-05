@@ -1,13 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
-    <React.Fragment>
+    <>
       <h1>No encontrado</h1>
-      <h2>Regresa al home</h2>
-    </React.Fragment>
+      <Link to='/'>
+        <button type='submit' className='button'>Regresa al Home</button>
+      </Link>
+    </>
   );
 };
 
 export default NotFound;
-

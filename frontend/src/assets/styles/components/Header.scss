@@ -1,3 +1,14 @@
+// Dynamic CSS
+.green {
+  background-color: #4B5D67;
+}
+
+.red {
+  background: #ff1100;
+}
+
+// -----------
+
 .header {
   align-items: center;
   background: #4B5D67;
@@ -11,7 +22,7 @@
 
 .header__img {
   margin-left: 10px;
-  width: 250px;
+  width: 230px;
 }
 
 .header__menu {
