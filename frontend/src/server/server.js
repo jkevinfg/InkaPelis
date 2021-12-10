@@ -27,7 +27,7 @@ app.get('*', (req, res) => {
     <html>
       <head>
         <link rel="stylesheet" href="frontend/assets/app.css" type="text/css">
-        <title>Platzi Video</title>
+        <title>InkaPelis</title>
       </head>
       <body>
         <div id="app"></div>
