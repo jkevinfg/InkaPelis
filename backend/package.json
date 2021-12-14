@@ -7,20 +7,26 @@
     "dev": "DEBUG=app:* nodemon index",
     "start": "NODE_ENV=production node index",
     "test": "mocha --exit",
-    "cover" : "nyc npm run test",
-    "report" : "nyc report --reporter=html && xdg-open coverage/index.html"
+    "cover": "nyc npm run test",
+    "report": "nyc report --reporter=html && open coverage/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/boom": "^9.1.4",
+    "@hapi/joi": "^15.1.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.2",
-    "mongodb": "^4.1.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.1.1",
+    "passport": "^0.5.0",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
+    "chalk": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -32,8 +38,13 @@
     "sinon": "^11.1.2",
     "supertest": "^6.1.6"
   },
- "nyc" : {
-  "all":true,
-  "include": ["routes","services","lib","utils"]
- }
+  "nyc": {
+    "all": true,
+    "include": [
+      "routes",
+      "services",
+      "lib",
+      "utils"
+    ]
+  }
 }

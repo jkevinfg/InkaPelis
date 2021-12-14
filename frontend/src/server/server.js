@@ -48,7 +48,7 @@ const setResponse = (html, preloadedState, manifest) => {
   <html>
     <head>
       <link rel="stylesheet" href="${mainStyles}" type="text/css">
-      <title>Platzi Video</title>
+      <title>InkaPelis</title>
     </head>
     <body>
       <div id="app">${html}</div>
