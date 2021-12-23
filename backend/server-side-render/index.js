@@ -16,8 +16,8 @@ app.use(cookieParser());
 require("./utils/auth/strategies/basic");
 
 // Agregamos las variables de timpo en segundos
-const THIRTY_DAYS_IN_SEC = 2592000;
-const TWO_HOURS_IN_SEC = 7200;
+const THIRTY_DAYS_IN_SEC =  2592000000;
+const TWO_HOURS_IN_SEC = 7200000 ;
 
 app.post("/auth/sign-in", async function(req, res, next) {
   // Obtenemos el atributo rememberMe desde el cuerpo del request
@@ -52,6 +52,7 @@ app.post("/auth/sign-in", async function(req, res, next) {
   })(req, res, next);
 });
 
+
 app.post("/auth/sign-up", async function(req, res, next) {
   const { body: user } = req;
 
@@ -72,26 +73,26 @@ app.get("/movies", async function(req, res, next) {});
 
 
 app.post("/user-movies", async function(req, res, next) {
-    try {
-      const { body: userMovie } = req;
-      const { token } = req.cookies;
-  
-      const { data, status } = await axios({
-        url: `${config.apiUrl}/api/user-movies`,
-        headers: { Authorization: `Bearer ${token}` },
-        method: "post",
-        data: userMovie
-      });
-  
-      if (status !== 201) {
-        return next(boom.badImplementation());
-      }
-  
-      res.status(201).json(data);
-    } catch (error) {
-      next(error);
+  try {
+    const { body: userMovie } = req;
+    const { token } = req.cookies;
+
+    const { data, status } = await axios({
+      url: `${config.apiUrl}/api/user-movies`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: "post",
+      data: userMovie
+    });
+
+    if (status !== 201) {
+      return next(boom.badImplementation());
     }
-  });
+
+    res.status(201).json(data);
+  } catch (error) {
+    next(error);
+  }
+});
 
   app.delete("/user-movies/:userMovieId", async function(req, res, next) {
     try {
