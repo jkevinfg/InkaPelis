@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loginRequest } from '../actions';
+import { loginUser } from '../actions';
 import Header from '../components/Header';
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
@@ -23,8 +24,7 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.loginRequest(form);
-    props.history.push('/');
+    props.loginUser(form,'/');
   };
 
   return (
@@ -88,7 +88,11 @@ const Login = (props) => {
 };
 
 const mapDispatchToProps = {
-  loginRequest,
+  loginUser,
 };
+
+Login.propTypes = {
+  loginUser: PropTypes.func,
+}
 
 export default connect(null, mapDispatchToProps)(Login);

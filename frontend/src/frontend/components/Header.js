@@ -12,9 +12,16 @@ const Header = (props) => {
   const { user, setColor } = props;
   const inputStyle = classNames('header', setColor); //style header
   const hasUser = Object.keys(user).length > 0;
+  
   const handleLogout = () => {
+    document.cookie = "email=";
+    document.cookie = "name=";
+    document.cookie = "id=";
+    document.cookie = "token="
     props.logoutRequest({});
+    window.location.href = '/login'
   };
+  
   return (
     <header className={inputStyle}>
       <Link to='/'>

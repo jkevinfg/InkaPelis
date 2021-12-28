@@ -8,15 +8,15 @@ import NotFound from '../containers/NotFound';
 import Player from '../containers/Player';
 import Layout from '../components/Layout';
 
-const App = () => {
+const App = ({ isLogged }) => {
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/player/:id' component={Player} />
+          <Route exact path="/" component={isLogged ? Home : Login} />
+          <Route exact path="/player/:id" component={isLogged ? Player : Login} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

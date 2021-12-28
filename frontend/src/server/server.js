@@ -9,8 +9,9 @@ import { createStore } from 'redux';
 import { renderRoutes } from 'react-router-config';
 import { StaticRouter } from 'react-router-dom';
 import serverRoutes from '../frontend/routes/serverRoutes';
+import Layout from '../frontend/components/Layout';
+
 import reducer from '../frontend/reducers';
-import initialState from '../frontend/initialState';
 import getManifest from './getManifest';
 
 import cookieParser from 'cookie-parser';
@@ -75,16 +76,41 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const renderApp = (req, res) => {
+  let initialState;
+  const { email, name, id } = req.cookies;
+
+  if (id) {
+    initialState = {
+      user: {
+        email, name, id
+      },
+      searchResult: [],
+      mylist: [],
+      trends: [],
+      originals: []
+    }
+  } else {
+    initialState = {
+      user: {},
+      searchResult: [],
+      mylist: [],
+      trends: [],
+      originals: []
+    }
+  }
+
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
+  const isLogged = (initialState.user.id);
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        {renderRoutes(serverRoutes)}
+        <Layout>
+          {renderRoutes(serverRoutes(isLogged))}
+        </Layout>
       </StaticRouter>
-    </Provider>,
-  );
-
+    </Provider>
+  )
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
@@ -95,22 +121,22 @@ app.post("/auth/sign-in", async function(req, res, next) {
         next(boom.unauthorized());
       }
 
-      req.login(data, { session: false }, async function(error) {
-        if (error) {
-          next(error);
+      req.login(data, { session: false }, async function(err) {
+        if (err) {
+          next(err);
         }
 
         const { token, ...user } = data;
 
         res.cookie("token", token, {
-          httpOnly: !config.dev,
-          secure: !config.dev
+          httpOnly: !(ENV === 'development'),
+          secure: !(ENV === 'development')
         });
 
         res.status(200).json(user);
       });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   })(req, res, next);
 });
