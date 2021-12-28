@@ -11,6 +11,7 @@ import '../assets/styles/components/Register.scss';
 const Register = (props) => {
   const [form, setValues] = useState({
     email: '',
+    id: '',
     name: '',
     password: '',
   });

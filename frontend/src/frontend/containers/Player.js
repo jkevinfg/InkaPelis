@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getVideoSource } from '../actions';
 import '../assets/styles/components/Player.scss';
@@ -32,6 +33,11 @@ const Player = (props) => {
       <button className='button'>Regresa al Home</button>
     </Link>
   );
+};
+
+
+Player.propTypes = {
+  getVideoSource: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

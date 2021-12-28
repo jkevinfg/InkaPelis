@@ -91,7 +91,7 @@ const renderApp = async (req, res) => {
       user: {
         id, email, name,
       },
-      mylist: [],
+      myList: [],
       searchResult : [],
       trends: movieList.filter(movie => movie.contentRating === 'PG' &&movie._id),
       originals: movieList.filter(movie => movie.contentRating === 'G'&& movie._id)
@@ -99,7 +99,7 @@ const renderApp = async (req, res) => {
   } catch (err) {
     initialState = {
       user: {},
-      mylist: [],
+      myList: [],
       searchResult : [],
       trends: [],
       originals: []

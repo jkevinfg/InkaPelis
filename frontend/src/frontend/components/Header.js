@@ -9,9 +9,13 @@ import logo from '../assets/static/logoinka.png';
 import userIcon from '../assets/static/user-icon.png';
 
 const Header = (props) => {
-  const { user, setColor } = props;
-  const inputStyle = classNames('header', setColor); //style header
+  const { user, isLogin, isRegister } = props;
   const hasUser = Object.keys(user).length > 0;
+
+  const HeaderClass = classNames('header', {
+    isLogin,
+    isRegister,
+  });
   
   const handleLogout = () => {
     document.cookie = "email=";
@@ -23,7 +27,7 @@ const Header = (props) => {
   };
   
   return (
-    <header className={inputStyle}>
+    <header  className={HeaderClass}>
       <Link to='/'>
         <img className='header__img' src={logo} alt='InkaPelis' />
       </Link>

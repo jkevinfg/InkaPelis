@@ -15,15 +15,11 @@ import removeIcon from '../assets/static/remove-icon.png';
 import { setFavorite, deleteFavorite } from '../actions';
 
 const CarouselItem = (props) => {
-  const { id, cover, title, year, duration, contentRating, isList } = props;
+  const {id, cover, title, year, contentRating, duration, isList, slug, source } = props;
   const handleSetFavorite = () => {
     props.setFavorite({
-      id,
-      cover,
-      title,
-      year,
-      duration,
-      contentRating,
+      id, cover, title, year, contentRating,
+      duration, isList, slug, source
     });
   };
   const handleDeleteFavorite = (itemId) => {
@@ -68,13 +64,14 @@ const CarouselItem = (props) => {
 };
 
 CarouselItem.propTypes = {
-  cover: PropTypes.string,
   title: PropTypes.string,
   year: PropTypes.number,
   contentRating: PropTypes.string,
   duration: PropTypes.number,
+  cover: PropTypes.string,
+  deteleFavorite: PropTypes.func,
+  setFavorite: PropTypes.func,
 };
-
 // Redux
 const mapDispatchToProps = {
   setFavorite,

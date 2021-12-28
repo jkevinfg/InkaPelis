@@ -13,6 +13,8 @@ import '../assets/styles/components/Login.scss';
 const Login = (props) => {
   const [form, setValues] = useState({
     email: '',
+    id: '',
+    name: '',
   });
 
   const handleInput = (e) => {
@@ -29,7 +31,7 @@ const Login = (props) => {
 
   return (
     <>
-      <Header setColor='green' />
+      <Header isLogin  />
       <section className='login'>
         <section className='login__container'>
           <h2>Inicia sesión</h2>
