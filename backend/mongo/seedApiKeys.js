@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 const crypto = require('crypto');
 const debug = require('debug')('app:scripts:api-keys');
-const MongoLib = require('../../lib/mongo');
+const MongoLib = require('../lib/mongo');
 
 const adminScopes = [
   'signin:auth',

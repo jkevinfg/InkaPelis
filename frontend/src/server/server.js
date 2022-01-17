@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
 import helmet from 'helmet';
@@ -18,27 +19,39 @@ import cookieParser from 'cookie-parser';
 import boom from '@hapi/boom';
 import passport from 'passport';
 import axios from 'axios';
-dotenv.config();
 
+
+const { config } = require("./config");
 
 const app = express();
-const { ENV, PORT } = process.env;
 
+
+// body parser
 app.use(express.json());
 app.use(cookieParser());
+app.use(session({ secret: config.sessionSecret }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./utils/auth/strategies/basic');
+
+//  Basic strategy
+require("./utils/auth/strategies/basic");
+
+// OAuth strategy
+require("./utils/auth/strategies/oauth");
+
+// Twitter strategy
+require("./utils/auth/strategies/twitter");
 
 
-if (ENV === 'development') {
+
+if (config.dev === 'development') {
   console.log('Development config');
   const webpackConfig = require('../../webpack.config');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(webpackConfig);
-  const serverConfig = { port: PORT, hot: true };
+  const serverConfig = { port: config.port, hot: true };
 
   app.use(webpackDevMiddleware(compiler, serverConfig));
   app.use(webpackHotMiddleware(compiler));
@@ -82,7 +95,7 @@ const renderApp = async (req, res) => {
   const { token, email, name, id } = req.cookies;
   try {
     let movieList = await axios({
-      url: `${process.env.API_URL}/api/movies`,
+      url: `${config.apiUrl}/api/movies`,
       headers: { Authorization: `Bearer ${token}`},
       method: 'get',
     });
@@ -122,6 +135,9 @@ const renderApp = async (req, res) => {
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
+
+
+
 app.post("/auth/sign-in", async function(req, res, next) {
   passport.authenticate("basic", function(error, data) {
     try {
@@ -129,22 +145,22 @@ app.post("/auth/sign-in", async function(req, res, next) {
         next(boom.unauthorized());
       }
 
-      req.login(data, { session: false }, async function(err) {
-        if (err) {
-          next(err);
+      req.login(data, { session: false }, async function(error) {
+        if (error) {
+          next(error);
         }
 
         const { token, ...user } = data;
 
         res.cookie("token", token, {
-          httpOnly: !(ENV === 'development'),
-          secure: !(ENV === 'development')
+          httpOnly: !config.dev,
+          secure: !config.dev
         });
 
         res.status(200).json(user);
       });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   })(req, res, next);
 });
@@ -154,7 +170,7 @@ app.post("/auth/sign-up", async function (req, res, next) {
 
   try {
     const userData = await axios({
-      url: `${process.env.API_URL}/api/auth/sign-up`,
+      url: `${config.apiUrl}/api/auth/sign-up`,
       method: "post",
       data: {
         'email': user.email,
@@ -172,9 +188,105 @@ app.post("/auth/sign-up", async function (req, res, next) {
   }
 });
 
-app.get('*', renderApp);
 
-app.listen(PORT, (err) => {
-  if (err) console.log(err);
-  else console.log(`Server running on port ${PORT}`);
+app.get("/movies", async function(req, res, next) {});
+
+app.post("/user-movies", async function(req, res, next) {
+  try {
+    const { body: userMovie } = req;
+    const { token } = req.cookies;
+
+    const { data, status } = await axios({
+      url: `${config.apiUrl}/api/user-movies`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: "post",
+      data: userMovie
+    });
+
+    if (status !== 201) {
+      return next(boom.badImplementation());
+    }
+
+    res.status(201).json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete("/user-movies/:userMovieId", async function(req, res, next) {
+  try {
+    const { userMovieId } = req.params;
+    const { token } = req.cookies;
+
+    const { data, status } = await axios({
+      url: `${config.apiUrl}/api/user-movies/${userMovieId}`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: "delete"
+    });
+
+    if (status !== 200) {
+      return next(boom.badImplementation());
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get(
+  "/auth/google-oauth",
+  passport.authenticate("google-oauth", {
+    scope: ["email", "profile", "openid"]
+  })
+);
+
+app.get(
+  "/auth/google-oauth/callback",
+  passport.authenticate("google-oauth", { session: false }),
+  function(req, res, next) {
+    if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, user } = req.user;
+
+    res.cookie("token", token, {
+      httpOnly: !config.dev,
+      secure: !config.dev
+    });
+
+    res.cookie('name', user.name);
+    res.cookie('email', user.email);
+    res.cookie('id', user.id);
+    res.redirect('/');
+  }
+);
+
+app.get("/auth/twitter", passport.authenticate("twitter"));
+
+app.get(
+  "/auth/twitter/callback",
+  passport.authenticate("twitter", { session: false }),
+  function(req, res, next) {
+    if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, user } = req.user;
+
+    res.cookie("token", token, {
+      httpOnly: !config.dev,
+      secure: !config.dev
+    });
+
+    res.cookie('name', user.name);
+    res.cookie('email', user.email);
+    res.cookie('id', user.id);
+    res.redirect('/');
+  }
+);
+app.get('*', renderApp);
+app.listen(config.port, function() {
+  console.log(`Listening http://localhost:${config.port}`);
 });

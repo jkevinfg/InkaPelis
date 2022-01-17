@@ -53,28 +53,20 @@ const Login = (props) => {
               onChange={handleInput}
             />
             <button type='submit' className='button'>Iniciar sesión</button>
-            <div className='login__container--remember-me'>
-              <label>
-                <input
-                  type='checkbox'
-                  id='cbox1'
-                  defaultValue='first_checkbox'
-                />
-                Recuérdame
-              </label>
-              <a href='/'>Olvidé mi contraseña</a>
-            </div>
+   
           </form>
           <section className='login__container--social-media'>
             <div>
-              <img src={googleIcon} alt='icono google' />
-              {' '}
-              Inicia sesión con Google
+              <a href="/auth/google-oauth">
+                <img className="" src={googleIcon} alt="Google" />
+                Inicia sesión con google
+              </a>
             </div>
             <div>
-              <img src={twitterIcon} alt='icono twitter' />
-              {' '}
-              Inicia sesión con Twitter
+            <a href="/auth/twitter">
+              <img className="" src={twitterIcon} alt="Twitter" />
+              Inicia sesión con twitter
+            </a>
             </div>
           </section>
           <p className='login__container--register'>
