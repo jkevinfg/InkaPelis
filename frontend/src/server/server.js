@@ -93,18 +93,42 @@ const setResponse = (html, preloadedState, manifest) => {
 const renderApp = async (req, res) => {
   let initialState;
   const { token, email, name, id } = req.cookies;
+  const myList = [];
+
   try {
+
     let movieList = await axios({
       url: `${config.apiUrl}/api/movies`,
       headers: { Authorization: `Bearer ${token}`},
       method: 'get',
     });
+
+    let userMovies = await axios({
+      url: `${config.apiUrl}/api/user-movies/?userId=${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'get',
+    });
+
     movieList = movieList.data.data;
+    userMovies = userMovies.data.data;
+   
+    userMovies.forEach((userMovie) => {
+      movieList.forEach((movie) => {
+        if (movie._id === userMovie.movieId) {
+          movie._id = userMovie._id;
+          myList.push(movie);
+        }
+      });
+    });
+
     initialState = {
       user: {
         id, email, name,
       },
-      myList: [],
+      playing: {},
+      myList,
       searchResult : [],
       trends: movieList.filter(movie => movie.contentRating === 'PG' &&movie._id),
       originals: movieList.filter(movie => movie.contentRating === 'G'&& movie._id)
@@ -112,7 +136,8 @@ const renderApp = async (req, res) => {
   } catch (err) {
     initialState = {
       user: {},
-      myList: [],
+      playing: {},
+      myList,
       searchResult : [],
       trends: [],
       originals: []
@@ -121,7 +146,7 @@ const renderApp = async (req, res) => {
   
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
-  const isLogged = (initialState.user.id);
+  const isLogged = Boolean(initialState.user.id);
 
   const html = renderToString(
     <Provider store={store}>
@@ -191,11 +216,11 @@ app.post("/auth/sign-up", async function (req, res, next) {
 
 app.get("/movies", async function(req, res, next) {});
 
+//myList
 app.post("/user-movies", async function(req, res, next) {
   try {
     const { body: userMovie } = req;
     const { token } = req.cookies;
-
     const { data, status } = await axios({
       url: `${config.apiUrl}/api/user-movies`,
       headers: { Authorization: `Bearer ${token}` },
@@ -233,6 +258,8 @@ app.delete("/user-movies/:userMovieId", async function(req, res, next) {
     next(error);
   }
 });
+
+
 
 app.get(
   "/auth/google-oauth",

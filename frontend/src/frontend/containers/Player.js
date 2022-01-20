@@ -7,6 +7,7 @@ import '../assets/styles/components/Player.scss';
 
 const Player = (props) => {
   const { id } = props.match.params;
+  console.log(id)
   const hasPlaying = Object.keys(props.playing).length > 0;
 
   useEffect(() => {
@@ -15,8 +16,7 @@ const Player = (props) => {
 
   return hasPlaying ? (
     <div className='Player'>
-      <video controls autoPlay>
-        <source src={props.playing.source} type='video/mp4' />
+      <video controls autoPlay src={props.playing.source}>
       </video>
       <div className='Player-back'>
         <button

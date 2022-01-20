@@ -18,6 +18,8 @@ function userMoviesApi(app) {
 
   const userMoviesService = new UserMoviesService();
 
+
+  //para listar MyList necesito userID
   router.get(
     '/',
     passport.authenticate('jwt', { session: false }),
@@ -39,6 +41,13 @@ function userMoviesApi(app) {
     }
   );
 
+  /*
+    para agregar a una pelicula a Mylist(usermovie) necesito idPelicula , idUsuario
+    const createUserMovieSchema = {
+      userId: userIdSchema,
+      movieId: movieIdSchema
+    };
+  */
   router.post(
     '/',
     passport.authenticate('jwt', { session: false }),
@@ -46,16 +55,34 @@ function userMoviesApi(app) {
     validationHandler(createUserMovieSchema),
     async function(req, res, next) {
       const { body: userMovie } = req;
-
       try {
-        const createdUserMovieId = await userMoviesService.createUserMovie({
-          userMovie
+
+        const {userId , movieId} = userMovie;
+        const userMovies = await userMoviesService.getUserMovies({ userId });
+        
+        let exist = true;
+        userMovies.forEach(element => {
+          if ( movieId === element.movieId ) {
+            exist = false;
+          }
         });
 
-        res.status(201).json({
-          data: createdUserMovieId,
-          message: 'user movie created'
-        });
+        if (exist) {
+          const createdUserMovieId = await userMoviesService.createUserMovie({
+            userMovie
+          });
+  
+          res.status(201).json({
+            data: createdUserMovieId,
+            message: 'user movie created'
+          });
+
+        }else {
+          res.status(201).json({
+            message: 'user movie exist'
+          });
+        }
+    
       } catch (err) {
         next(err);
       }

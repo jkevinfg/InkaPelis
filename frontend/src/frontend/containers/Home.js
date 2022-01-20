@@ -7,7 +7,9 @@ import CarouselItem from '../components/CarouselItem';
 import Header from '../components/Header';
 import '../assets/styles/App.scss';
 
-const Home = ({ myList, trends, originals, searchResult }) => {
+const Home = (props) => {
+  const { myList, trends, originals, searchResult  } = props
+  
   // const initialState = useInitialState(API);
   return (
     <>
@@ -21,7 +23,7 @@ const Home = ({ myList, trends, originals, searchResult }) => {
             <Carousel>
               {searchResult.map(item => (
                 <CarouselItem
-                  key={item.id}
+                  key={item._id}
                   {...item}
                 />
               ))}
@@ -34,16 +36,18 @@ const Home = ({ myList, trends, originals, searchResult }) => {
         <Categories title='Mi Lista'>
           <Carousel>
             {myList.map(item => (
-              <CarouselItem key={item.id} {...item} isList />
+              <CarouselItem key={item._id} {...item} isList />
             ))}
           </Carousel>
         </Categories>
       )}
 
+
+
       <Categories title='Series'>
         <Carousel>
           {trends.map(item => (
-            <CarouselItem key={item.id} {...item} />
+            <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
       </Categories>
@@ -51,7 +55,7 @@ const Home = ({ myList, trends, originals, searchResult }) => {
       <Categories title='Peliculas'>
         <Carousel>
           {originals.map(item => (
-            <CarouselItem key={item.id} {...item} />
+            <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
       </Categories>

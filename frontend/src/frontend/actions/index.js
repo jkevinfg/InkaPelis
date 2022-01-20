@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const setFavorite = payload => ({
+export const setFavorite = (payload) => ({
   type: 'SET_FAVORITE',
   payload,
 });
@@ -39,6 +39,31 @@ export const setError = payload => ({
   payload,
 });
 
+
+
+export const favoriteMovie = (userId, movie) => (dispatch) => {
+  const userMovie = {
+    userId,
+    movieId : movie._id ,
+  };
+  axios.post('/user-movies', userMovie).then(({data}) => {
+    if(data.message === 'user movie created'){
+      dispatch(setFavorite(movie))
+    }
+    }).catch(error => dispatch(setError(error)))
+};
+
+
+export const deleteMovie = (userMovieId) => (dispatch) => {
+
+  axios.delete(`/user-movies/${userMovieId}`)
+    .then(({ status }) => {
+      if (status === 200) {
+        dispatch(deleteFavorite(userMovieId));
+      }
+    })
+    .catch((err) => dispatch(setError(err)));
+};
 
 export const registerUser = (payload, redirectUrl) => {
   return (dispatch) => {
