@@ -2,19 +2,19 @@ const express = require('express');
 const helmet = require('helmet');
 const app = express();
 
-const { config } = require('./config/index');
+const { config } = require('./src/config/index');
 
-const authApi = require('./routes/auth');
-const moviesApi = require('./routes/movies.js');
-const userMoviesApi = require('./routes/userMovies.js');
+const authApi = require('./src/routes/auth');
+const moviesApi = require('./src/routes/movies.js');
+const userMoviesApi = require('./src/routes/userMovies.js');
 
 const {
     logErrors,
     wrapErrors,
     errorHandler
-} = require('./utils/middleware/errorHandlers.js');
+} = require('./src/utils/middleware/errorHandlers.js');
 
-const notFoundHandler = require('./utils/middleware/notFoundHandler');
+const notFoundHandler = require('./src/utils/middleware/notFoundHandler');
 
 // body parser
 app.use(express.json());
