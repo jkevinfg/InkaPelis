@@ -7,7 +7,7 @@ const movieYearSchema = joi
 	.min(1888)
 	.max(2077);
 const movieCoverSchema = joi.string().uri();
-const movieDescriptionSchema = joi.string().max(300);
+const movieDescriptionSchema = joi.string().max(800);
 const movieDurationSchema = joi
 	.number()
 	.min(1)

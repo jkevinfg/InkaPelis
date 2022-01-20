@@ -65,16 +65,10 @@ const CarouselItem = (props) => {
 						/>
       			    )}
 
-
-				
-					
-					
-					
-
 				</div>
 				<p className='carousel-item__details--title'>{title}</p>
 				<p className='carousel-item__details--subtitle'>
-					{`${year} ${contentRating} ${duration}`}
+					{`${year} - ${duration} min`}
 				</p>
 			</div>
 		</div>

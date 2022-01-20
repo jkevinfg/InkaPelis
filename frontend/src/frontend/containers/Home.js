@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import '../assets/styles/App.scss';
 
 const Home = (props) => {
-  const { myList, trends, originals, searchResult  } = props
+  const { myList, movies, documentaries, searchResult  } = props
   
   // const initialState = useInitialState(API);
   return (
@@ -44,9 +44,9 @@ const Home = (props) => {
 
 
 
-      <Categories title='Series'>
+      <Categories title='Documentales'>
         <Carousel>
-          {trends.map(item => (
+          {documentaries.map(item => (
             <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
@@ -54,7 +54,7 @@ const Home = (props) => {
 
       <Categories title='Peliculas'>
         <Carousel>
-          {originals.map(item => (
+          {movies.map(item => (
             <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
@@ -66,10 +66,12 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
   return {
     myList: state.myList,
-    trends: state.trends,
-    originals: state.originals,
+    movies: state.movies,
+    documentaries: state.documentaries,
     searchResult: state.searchResult,
   };
 };
 
 export default connect(mapStateToProps, null)(Home);
+
+

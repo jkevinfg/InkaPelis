@@ -130,8 +130,8 @@ const renderApp = async (req, res) => {
       playing: {},
       myList,
       searchResult : [],
-      trends: movieList.filter(movie => movie.contentRating === 'PG' &&movie._id),
-      originals: movieList.filter(movie => movie.contentRating === 'G'&& movie._id)
+      movies: movieList.filter(movie => movie.tags.includes("Documental") === false && movie._id),
+      documentaries: movieList.filter(movie => movie.tags.includes("Documental") === true && movie._id )
     };
   } catch (err) {
     initialState = {
@@ -139,8 +139,8 @@ const renderApp = async (req, res) => {
       playing: {},
       myList,
       searchResult : [],
-      trends: [],
-      originals: []
+      movies: [],
+      documentaries: []
     }
   }
   
