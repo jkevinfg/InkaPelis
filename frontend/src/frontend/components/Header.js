@@ -16,45 +16,45 @@ const Header = (props) => {
     isLogin,
     isRegister,
   });
-  
+
   const handleLogout = () => {
-    document.cookie = "email=";
-    document.cookie = "name=";
-    document.cookie = "id=";
-    document.cookie = "token="
+    document.cookie = 'email=';
+    document.cookie = 'name=';
+    document.cookie = 'id=';
+    document.cookie = 'token=';
     props.logoutRequest({});
-    window.location.href = '/login'
+    window.location.href = '/login';
   };
-  
+
   return (
-    <header  className={HeaderClass}>
-      <Link to='/'>
-        <img className='header__img' src={logo} alt='InkaPelis' />
+    <header className={HeaderClass}>
+      <Link to="/">
+        <img className="header__img" src={logo} alt="InkaPelis" />
       </Link>
-      <div className='header__menu'>
-        <div className='header__menu--profile'>
+      <div className="header__menu">
+        <div className="header__menu--profile">
           {hasUser ? (
             <img src={gravatar(user.email)} alt={user.email} />
           ) : (
-            <img src={userIcon} alt='User icon' />
+            <img src={userIcon} alt="User icon" />
           )}
           <p>Perfil</p>
         </div>
         <ul>
           {hasUser ? (
             <li>
-              <Link to='/'>{user.name}</Link>
+              <Link to="/">{user.name}</Link>
             </li>
           ) : null}
           {hasUser ? (
             <li>
-              <Link to='/' onClick={handleLogout}>
+              <Link to="/" onClick={handleLogout}>
                 Cerrar Sesión
               </Link>
             </li>
           ) : (
             <li>
-              <Link to='/login'>Iniciar Sesión</Link>
+              <Link to="/login">Iniciar Sesión</Link>
             </li>
           )}
         </ul>
@@ -63,11 +63,9 @@ const Header = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
+const mapStateToProps = state => ({
+  user: state.user,
+});
 
 const mapDispatchToProps = {
   logoutRequest,

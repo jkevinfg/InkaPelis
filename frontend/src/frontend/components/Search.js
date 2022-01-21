@@ -5,7 +5,6 @@ import { getVideoSearch } from '../actions';
 import '../assets/styles/components/Search.scss';
 
 const Search = (props) => {
-
   const { isHome, getVideoSearch } = props;
 
   const inputStyle = classNames('input', {
@@ -17,13 +16,13 @@ const Search = (props) => {
   };
 
   return (
-    <section className='main'>
-      <h2 className='main__title'>¿Qué quieres ver hoy?</h2>
+    <section className="main">
+      <h2 className="main__title">¿Qué quieres ver hoy?</h2>
 
       <input
         className={inputStyle}
-        type='text'
-        placeholder='Buscar...'
+        type="text"
+        placeholder="Buscar..."
         onKeyUp={handleInput}
       />
 
@@ -31,11 +30,9 @@ const Search = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    searchResult: state.searchResult,
-  };
-};
+const mapStateToProps = state => ({
+  searchResult: state.searchResult,
+});
 
 const mapDispatchToProps = {
   getVideoSearch,

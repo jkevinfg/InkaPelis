@@ -25,42 +25,42 @@ const Register = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.registerUser(form,'/login');
+    props.registerUser(form, '/login');
   };
   return (
     <>
-      <Header setColor='green' />
-      <section className='register'>
-        <section className='register__container'>
+      <Header setColor="green" />
+      <section className="register">
+        <section className="register__container">
           <h2>Regístrate</h2>
           <form
-            className='register__container--form'
+            className="register__container--form"
             onSubmit={handleSubmit}
           >
             <input
-              name='name'
-              className='input'
-              type='text'
-              placeholder='Nombre'
+              name="name"
+              className="input"
+              type="text"
+              placeholder="Nombre"
               onChange={handleInput}
             />
             <input
-              name='email'
-              className='input'
-              type='email'
-              placeholder='Correo'
+              name="email"
+              className="input"
+              type="email"
+              placeholder="Correo"
               onChange={handleInput}
             />
             <input
-              name='password'
-              className='input'
-              type='password'
-              placeholder='Contraseña'
+              name="password"
+              className="input"
+              type="password"
+              placeholder="Contraseña"
               onChange={handleInput}
             />
-            <button type='submit' className='button'>Registrarme</button>
+            <button type="submit" className="button">Registrarme</button>
           </form>
-          <Link to='/login'>Iniciar sesión</Link>
+          <Link to="/login">Iniciar sesión</Link>
         </section>
       </section>
     </>
@@ -72,8 +72,7 @@ const mapDispatchToProps = {
 };
 
 Register.propTypes = {
-  registerUser : PropTypes.func
-}
-
+  registerUser: PropTypes.func,
+};
 
 export default connect(null, mapDispatchToProps)(Register);

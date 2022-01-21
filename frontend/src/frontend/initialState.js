@@ -1,4 +1,4 @@
-//mylist, trends, originals, searchResult
+// mylist, trends, originals, searchResult
 
 const initialState = {
   user: {},

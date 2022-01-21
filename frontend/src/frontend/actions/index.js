@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const setFavorite = (payload) => ({
+export const setFavorite = payload => ({
   type: 'SET_FAVORITE',
   payload,
 });
@@ -39,64 +39,56 @@ export const setError = payload => ({
   payload,
 });
 
-
-
 export const favoriteMovie = (userId, movie) => (dispatch) => {
   const userMovie = {
     userId,
-    movieId : movie._id ,
+    movieId: movie._id,
   };
-  axios.post('/user-movies', userMovie).then(({data}) => {
-    if(data.message === 'user movie created'){
-      dispatch(setFavorite(movie))
+  axios.post('/user-movies', userMovie).then(({ data }) => {
+    if (data.message === 'user movie created') {
+      dispatch(setFavorite(movie));
     }
-    }).catch(error => dispatch(setError(error)))
+  }).catch(error => dispatch(setError(error)));
 };
 
-
-export const deleteMovie = (userMovieId) => (dispatch) => {
-
+export const deleteMovie = userMovieId => (dispatch) => {
   axios.delete(`/user-movies/${userMovieId}`)
     .then(({ status }) => {
       if (status === 200) {
         dispatch(deleteFavorite(userMovieId));
       }
     })
-    .catch((err) => dispatch(setError(err)));
+    .catch(err => dispatch(setError(err)));
 };
 
-export const registerUser = (payload, redirectUrl) => {
-  return (dispatch) => {
-    axios.post('/auth/sign-up', payload)
-      .then(({ data }) => dispatch(registerRequest(data)))
-      .then(() => {
-        window.location.href = redirectUrl
-      })
-      .catch(error => dispatch(setError(error)))
-  };
-};
-
-export const loginUser = ({ email, password }, redirectUrl) => {
-  return (dispatch) => {
-    axios({
-      url: '/auth/sign-in/',
-      method: 'post',
-      auth: {
-        username: email,
-        password
-      },
+export const registerUser = (payload, redirectUrl) => (dispatch) => {
+  axios.post('/auth/sign-up', payload)
+    .then(({ data }) => dispatch(registerRequest(data)))
+    .then(() => {
+      window.location.href = redirectUrl;
     })
-      .then(({ data }) => {
-        document.cookie = `email=${data.user.email}`;
-        document.cookie = `name=${data.user.name}`;
-        document.cookie = `id=${data.user.id}`;
-        dispatch(loginRequest(data.user));
-      })
-      .then(() => {
-        window.location.href = redirectUrl;
-      })
-      .catch(err => dispatch(setError(err)));
-  }
+    .catch(error => dispatch(setError(error)));
 };
 
-export { setFavorite as default }
+export const loginUser = ({ email, password }, redirectUrl) => (dispatch) => {
+  axios({
+    url: '/auth/sign-in/',
+    method: 'post',
+    auth: {
+      username: email,
+      password,
+    },
+  })
+    .then(({ data }) => {
+      document.cookie = `email=${data.user.email}`;
+      document.cookie = `name=${data.user.name}`;
+      document.cookie = `id=${data.user.id}`;
+      dispatch(loginRequest(data.user));
+    })
+    .then(() => {
+      window.location.href = redirectUrl;
+    })
+    .catch(err => dispatch(setError(err)));
+};
+
+export { setFavorite as default };

@@ -26,36 +26,36 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.loginUser(form,'/');
+    props.loginUser(form, '/');
   };
 
   return (
     <>
-      <Header isLogin  />
-      <section className='login'>
-        <section className='login__container'>
+      <Header isLogin />
+      <section className="login">
+        <section className="login__container">
           <h2>Inicia sesión</h2>
-          <form className='login__container--form' onSubmit={handleSubmit}>
+          <form className="login__container--form" onSubmit={handleSubmit}>
             <input
-              name='email'
-              className='input'
-              type='text'
-              placeholder='Correo'
-              autoComplete='username'
+              name="email"
+              className="input"
+              type="text"
+              placeholder="Correo"
+              autoComplete="username"
               onChange={handleInput}
             />
             <input
-              name='password'
-              className='input'
-              type='password'
-              placeholder='Contraseña'
-              autoComplete='current-password'
+              name="password"
+              className="input"
+              type="password"
+              placeholder="Contraseña"
+              autoComplete="current-password"
               onChange={handleInput}
             />
-            <button type='submit' className='button'>Iniciar sesión</button>
-   
+            <button type="submit" className="button">Iniciar sesión</button>
+
           </form>
-          <section className='login__container--social-media'>
+          <section className="login__container--social-media">
             <div>
               <a href="/auth/google-oauth">
                 <img className="" src={googleIcon} alt="Google" />
@@ -63,17 +63,17 @@ const Login = (props) => {
               </a>
             </div>
             <div>
-            <a href="/auth/twitter">
-              <img className="" src={twitterIcon} alt="Twitter" />
-              Inicia sesión con twitter
-            </a>
+              <a href="/auth/twitter">
+                <img className="" src={twitterIcon} alt="Twitter" />
+                Inicia sesión con twitter
+              </a>
             </div>
           </section>
-          <p className='login__container--register'>
+          <p className="login__container--register">
             No tienes ninguna cuenta
             {' '}
             {'  '}
-            <Link to='/register'>Regístrate</Link>
+            <Link to="/register">Regístrate</Link>
           </p>
         </section>
       </section>
@@ -87,6 +87,6 @@ const mapDispatchToProps = {
 
 Login.propTypes = {
   loginUser: PropTypes.func,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -8,8 +8,10 @@ import Header from '../components/Header';
 import '../assets/styles/App.scss';
 
 const Home = (props) => {
-  const { myList, movies, documentaries, searchResult  } = props
-  
+  const {
+    myList, movies, documentaries, searchResult,
+  } = props;
+
   // const initialState = useInitialState(API);
   return (
     <>
@@ -17,9 +19,9 @@ const Home = (props) => {
       <Search isHome />
 
       {
-        Object.keys(searchResult).length > 0 &&
-        (
-          <Categories title='Resultados de la busqueda...'>
+        Object.keys(searchResult).length > 0
+        && (
+          <Categories title="Resultados de la busqueda...">
             <Carousel>
               {searchResult.map(item => (
                 <CarouselItem
@@ -33,7 +35,7 @@ const Home = (props) => {
       }
 
       {myList.length > 0 && (
-        <Categories title='Mi Lista'>
+        <Categories title="Mi Lista">
           <Carousel>
             {myList.map(item => (
               <CarouselItem key={item._id} {...item} isList />
@@ -42,9 +44,7 @@ const Home = (props) => {
         </Categories>
       )}
 
-
-
-      <Categories title='Documentales'>
+      <Categories title="Documentales">
         <Carousel>
           {documentaries.map(item => (
             <CarouselItem key={item._id} {...item} />
@@ -52,7 +52,7 @@ const Home = (props) => {
         </Carousel>
       </Categories>
 
-      <Categories title='Peliculas'>
+      <Categories title="Peliculas">
         <Carousel>
           {movies.map(item => (
             <CarouselItem key={item._id} {...item} />
@@ -63,15 +63,11 @@ const Home = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    myList: state.myList,
-    movies: state.movies,
-    documentaries: state.documentaries,
-    searchResult: state.searchResult,
-  };
-};
+const mapStateToProps = state => ({
+  myList: state.myList,
+  movies: state.movies,
+  documentaries: state.documentaries,
+  searchResult: state.searchResult,
+});
 
 export default connect(mapStateToProps, null)(Home);
-
-

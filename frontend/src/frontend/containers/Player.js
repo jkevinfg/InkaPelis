@@ -7,7 +7,7 @@ import '../assets/styles/components/Player.scss';
 
 const Player = (props) => {
   const { id } = props.match.params;
-  console.log(id)
+  console.log(id);
   const hasPlaying = Object.keys(props.playing).length > 0;
 
   useEffect(() => {
@@ -15,13 +15,11 @@ const Player = (props) => {
   }, []);
 
   return hasPlaying ? (
-    <div className='Player'>
-      <video controls autoPlay src={props.playing.source}>
-      </video>
-      <div className='Player-back'>
+    <div className="Player">
+      <video controls autoPlay src={props.playing.source} />
+      <div className="Player-back">
         <button
-          type='button'
-          className='button'
+          className="button"
           onClick={() => props.history.goBack()}
         >
           Regresar
@@ -29,22 +27,19 @@ const Player = (props) => {
       </div>
     </div>
   ) : (
-    <Link to='/'>
-      <button className='button'>Regresa al Home</button>
+    <Link to="/">
+      <button className="button">Regresa al Home</button>
     </Link>
   );
 };
-
 
 Player.propTypes = {
   getVideoSource: PropTypes.func,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    playing: state.playing,
-  };
-};
+const mapStateToProps = state => ({
+  playing: state.playing,
+});
 
 const mapDispatchToProps = {
   getVideoSource,
