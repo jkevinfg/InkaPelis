@@ -56,23 +56,22 @@ const Login = (props) => {
 
           </form>
           <section className="login__container--social-media">
-            <div>
-              <a href="/auth/google-oauth">
-                <img className="" src={googleIcon} alt="Google" />
-                Inicia sesión con google
-              </a>
-            </div>
-            <div>
-              <a href="/auth/twitter">
-                <img className="" src={twitterIcon} alt="Twitter" />
-                Inicia sesión con twitter
-              </a>
-            </div>
+            <div className='google'>
+                <img className='google__img' src={googleIcon} alt='Google' />
+                <p>
+                  <a href="/auth/google-oauth">Inicia sesión con Google</a>
+                </p>
+              </div>
+              <div className='twitter'>
+                <img className='twitter__img' src={twitterIcon} alt='Twitter' />
+                <p>
+                  <a href='/auth/twitter'>Inicia sesión con Twitter</a>
+                </p>
+              </div>
           </section>
-          <p className="login__container--register">
-            No tienes ninguna cuenta
-            {' '}
-            {'  '}
+          <p className='login__container--register'>
+            ¿No tienes ninguna cuenta?
+            <br />
             <Link to="/register">Regístrate</Link>
           </p>
         </section>

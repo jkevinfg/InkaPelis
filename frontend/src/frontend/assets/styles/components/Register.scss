@@ -1,40 +1,46 @@
 .register {
-   background-color: #4B5D67;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-   padding: 30px 20px;
-  min-height: calc(100vh - 200px);
-  /* El ancho será igual al tamaño de todo el height menos 200px (100px del header + 100px del footer) */
+  background-color: #4B5D67;
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ justify-content: center;
+  padding: 30px 20px;
+ min-height: calc(100vh - 200px);
+ /* El ancho será igual al tamaño de todo el height menos 200px (100px del header + 100px del footer) */
 }
 
 .register__container {
-   background-color: #4B5D67;
-  border: 2px solid white;
-  border-radius: 40px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  // min-height: 600px;
-  padding: 60px 68px 40px;
-  // width: 300px;
+ align-items: center;
+  background-color: #4B5D67;
+ border: 2px solid white;
+ border-radius: 40px;
+ box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+ color: white;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-around;
+ // min-height: 600px;
+ padding: 60px 68px 40px;
+ // width: 300px;
 }
 
 .register__container--form {
-  display: flex;
-  flex-direction: column;
+ display: flex;
+ flex-direction: column;
+ margin-bottom: 20px;
+}
+
+.register__container--form input{
+ width: 100%;
 }
 
 .register__container a {
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
+ color: white;
+ font-size: 16px;
+ text-align: center;
+ text-decoration: none;
 }
 
 .register__container a:hover {
-  text-decoration: underline;
+ text-decoration: underline;
 }
