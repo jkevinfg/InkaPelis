@@ -72,7 +72,7 @@ const setResponse = (html, preloadedState, manifest) => {
   <html>
     <head>
       <link rel="stylesheet" href=${mainStyles} type="text/css">
-      <title>Platzi Video</title>
+      <title>Inka Pelis</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -128,8 +128,15 @@ const renderApp = async (req, res) => {
       playing: {},
       myList,
       searchResult: [],
-      movies: movieList.filter(movie => movie.tags.includes('Documental') === false && movie._id),
-      documentaries: movieList.filter(movie => movie.tags.includes('Documental') === true && movie._id),
+      //scienceFiction
+      //comedy
+      //terror
+      //drama
+      //suspenso
+      drama : movieList.filter(movie => movie.tags[0] === 'Drama'),
+      animation : movieList.filter(movie => movie.tags[0] === 'Animation'),
+      scienceFiction : movieList.filter(movie => movie.tags[0] === 'ScienceFiction')
+      //  comedia : movieList.filter(movie => movie.tags[0] === 'Comedia')
     };
   } catch (err) {
     initialState = {
@@ -137,8 +144,9 @@ const renderApp = async (req, res) => {
       playing: {},
       myList,
       searchResult: [],
-      movies: [],
-      documentaries: [],
+      drama : [],
+      animation:[],
+      scienceFiction:[]
     };
   }
 

@@ -7,9 +7,10 @@ import CarouselItem from '../components/CarouselItem';
 import Header from '../components/Header';
 import '../assets/styles/App.scss';
 
+
 const Home = (props) => {
   const {
-    myList, movies, documentaries, searchResult,
+    myList, animation, searchResult,drama,scienceFiction
   } = props;
 
   // const initialState = useInitialState(API);
@@ -17,7 +18,6 @@ const Home = (props) => {
     <>
       <Header />
       <Search isHome />
-
       {
         Object.keys(searchResult).length > 0
         && (
@@ -44,30 +44,40 @@ const Home = (props) => {
         </Categories>
       )}
 
-      <Categories title="Documentales">
+      <Categories title="Ciencia Ficción">
         <Carousel>
-          {documentaries.map(item => (
+          {scienceFiction.map(item => (
             <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
       </Categories>
 
-      <Categories title="Peliculas">
+      <Categories title="Drama">
         <Carousel>
-          {movies.map(item => (
+          {drama.map(item => (
             <CarouselItem key={item._id} {...item} />
           ))}
         </Carousel>
       </Categories>
+
+      <Categories title="Animación">
+        <Carousel>
+          {animation.map(item => (
+            <CarouselItem key={item._id} {...item} />
+          ))}
+        </Carousel>
+      </Categories>
+     
     </>
   );
 };
 
 const mapStateToProps = state => ({
   myList: state.myList,
-  movies: state.movies,
-  documentaries: state.documentaries,
   searchResult: state.searchResult,
+  drama: state.drama,
+  animation: state.animation,
+  scienceFiction: state.scienceFiction
 });
 
 export default connect(mapStateToProps, null)(Home);

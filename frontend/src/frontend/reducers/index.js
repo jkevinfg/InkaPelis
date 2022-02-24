@@ -33,15 +33,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         playing:
-          state.documentaries.find(item => item._id === action.payload)
-          || state.movies.find(item => item._id === action.payload)
-          || [],
+          state.drama.find(item => item._id === action.payload)
+          || state.animation.find(item => item._id === action.payload)
+          || state.scienceFiction.find(item => item._id === action.payload)
+          ||[],
       };
     case 'GET_VIDEO_SEARCH':
 
       if (action.payload === '') return { ...state, searchResult: [] };
 
-      const listas = [...state.documentaries, ...state.movies];
+      const listas = [...state.drama, ...state.animation,...state.scienceFiction];
 
       return {
         ...state,
