@@ -17,10 +17,10 @@ const Login = (props) => {
     name: '',
   });
 
-  const handleInput = (e) => {
+   const handleInput = (e) => {
     setValues({
       ...form,
-      [e.target.name]: e.target.value,
+      [(e.target.name).trim()]: (e.target.value).trim(),
     });
   };
 
@@ -34,7 +34,8 @@ const Login = (props) => {
       <Header isLogin />
       <section className="login">
         <section className="login__container">
-          <h2>Inicia sesión</h2>
+            <h2 className="login__container__title" >Inicia sesión</h2>
+           <p className='login__container--default'>Usuario de prueba : admin@gmail.com  <br/> Contraseña de prueba : inkapelis</p>
           <form className="login__container--form" onSubmit={handleSubmit}>
             <input
               name="email"
